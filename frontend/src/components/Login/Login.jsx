@@ -11,8 +11,8 @@ import loginImg from '../../assets/login.jpeg';
 import useAuth from '../../hooks/auth';
 
 const schema = Yup.object({
-  username: Yup.string().min(2, 'Must be 3 characters or more').required('Required'),
-  password: Yup.string().min(3).required('Required'),
+  // username: Yup.string().min(2, 'Must be 3 characters or more').required('Required'),
+  // password: Yup.string().min(3).required('Required'),
 });
 
 // const getAuthHeader = () => {
@@ -108,7 +108,8 @@ const Login = () => {
                 }) => (
                   <Form
                     // noValidate
-                    hasValidation
+                    // hasValidation
+                    // validated={authFailed}
                     onSubmit={handleSubmit}
                     className="col-12 col-md-6 mt-3 mt-mb-0"
                   >
@@ -130,7 +131,7 @@ const Login = () => {
                         Ваш ник
                       </Form.Label>
                     </Form.Group>
-                    {errors.username && touched.username && errors.username}
+                    {/* {errors.username && touched.username && errors.username} */}
                     <Form.Group className="form-floating mb-4">
                       <Form.Control
                         type="password"
@@ -147,9 +148,13 @@ const Login = () => {
                         Пароль
                       </Form.Label>
                       <Form.Control.Feedback type="invalid" tooltip>
-                        {errors.password}
+                        {/* {errors.password} */}
+                        Неверные имя пользователя или пароль
                       </Form.Control.Feedback>
                     </Form.Group>
+                    {/* <Form.Group.Feedback type="invalid" tooltip>
+                      Неверные имя пользователя или пароль
+                    </Form.Group.Feedback> */}
                     {errors.password && touched.password && errors.password}
                     <Button
                       type="submit"
