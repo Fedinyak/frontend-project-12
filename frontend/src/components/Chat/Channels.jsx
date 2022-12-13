@@ -4,9 +4,10 @@ import {
   useSelector,
   useDispatch,
 } from 'react-redux';
-import { Button } from 'react-bootstrap';
+// import { Button } from 'react-bootstrap';
 import { getChannels, setCurrentChannelId } from '../../slices/channelsSlice';
 import { getMessages } from '../../slices/messagesSlice';
+import Channel from './Channel';
 
 // import plusBtn from '../../assets/plus-channel-btn.svg';
 
@@ -45,8 +46,8 @@ const Channels = () => {
 
     fetchContent();
   }, [dispatch]);
-  console.log(channels, 'channels');
-  console.log(currentChannelId, 'currentChannelId');
+  // console.log(channels, 'channels');
+  // console.log(currentChannelId, 'currentChannelId');
   return (
     <>
       <div className="d-flex justify-content-between mb-2 ps-4 pe-2">
@@ -65,38 +66,31 @@ const Channels = () => {
         </button>
       </div>
       <ul className="nav flex-column nav-pills nav-fill px-2">
-        {/* {stateValue.channels.entities.map((item) => ( */}
-        {channels.map((item) => {
-          const handleClick = (id) => {
-            dispatch(setCurrentChannelId(id));
+        {channels.map((item) => (
+          <Channel key={item.id} item={item} currentChannelId={currentChannelId} />))}
+        {/* {channels.map((item) => {
+          const { id, name } = item;
+          const handleClick = (currentId) => {
+            dispatch(setCurrentChannelId(currentId));
           };
-          const styleBtn = currentChannelId === item.id ? 'secondary' : 'light';
+          const styleBtn = currentChannelId === id ? 'secondary' : 'light';
+
           return (
-            <li key={item.id} id={item.id} className="nav-item w-100">
+            <li key={id} id={id} className="nav-item w-100">
+              <Channel item={item} currentChannelId={currentChannelId} />
               <Button
                 type="button"
                 variant={styleBtn}
                 className="w-100 rounded-0 text-start"
-                onClick={() => handleClick(item.id)}
+                onClick={() => handleClick(id)}
               >
                 <span className="me-1">#</span>
-                {item.name}
+                {name}
               </Button>
             </li>
           );
-        })}
-
-        {/* <li className="nav-item w-100">
-          <button type="button" className="w-100 rounded-0 text-start btn">
-            <span className="me-1">#</span>
-            random
-          </button>
-        </li> */}
+        })} */}
       </ul>
-      {/* {console.log(stateValue.entities)} */}
-      {/* {console.log(stateValue.channels.entities, 'entities')} */}
-      {/* {console.log({ stateValue }, 'dfsdf')} */}
-
     </>
   );
 };
