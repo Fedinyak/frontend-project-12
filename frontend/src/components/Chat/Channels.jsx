@@ -8,20 +8,20 @@ import {
 import { getChannels, setCurrentChannelId } from '../../slices/channelsSlice';
 import { getMessages } from '../../slices/messagesSlice';
 import Channel from './Channel';
-
+import getAuthHeader from '../../context/AuthHeader';
 // import plusBtn from '../../assets/plus-channel-btn.svg';
 
-const getAuthHeader = () => {
-  const userId = JSON.parse(localStorage.getItem('userId'));
+// const getAuthHeader = () => {
+//   const userId = JSON.parse(localStorage.getItem('userId'));
 
-  if (userId && userId.token) {
-    return { Authorization: `Bearer ${userId.token}` };
-  }
+//   if (userId && userId.token) {
+//     return { Authorization: `Bearer ${userId.token}` };
+//   }
 
-  return {};
-};
+//   return {};
+// };
 const Channels = () => {
-  const channels = useSelector((state) => Object.values(state.channels.entities));
+  const channels = useSelector((state) => Object.values(state.channels.entities || {}));
   // eslint-disable-next-line max-len
   const currentChannelId = useSelector((state) => state.channels.currentChannelId);
   // console.log(stateValue, 'stateValue');
