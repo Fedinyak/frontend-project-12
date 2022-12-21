@@ -57,7 +57,8 @@ const Messages = () => {
     const fetchContent = async () => {
       await axios.get('/api/v1/data', { headers: getAuthHeader() }).then((response) => {
         dispatch(getChannels(response.data.channels));
-        dispatch(setCurrentChannelId(response.data.currentChannelId));
+        // dispatch(setCurrentChannelId(response.data.currentChannelId));
+        dispatch(setCurrentChannelId(currentChannelId));
         dispatch(getMessages(response.data.messages));
       });
     };
