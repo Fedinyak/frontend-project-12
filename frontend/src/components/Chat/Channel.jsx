@@ -5,13 +5,18 @@ import {
 import { Button, Dropdown } from 'react-bootstrap';
 
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
-import { io } from 'socket.io-client';
-import axios from 'axios';
-import { getChannels, setCurrentChannelId } from '../../slices/channelsSlice';
-import getAuthHeader from '../../context/AuthHeader';
-import { getMessages } from '../../slices/messagesSlice';
+// import { io } from 'socket.io-client';
+// import axios from 'axios';
+import {
+  // getChannels,
+  setCurrentChannelId,
+} from '../../slices/channelsSlice';
+// import getAuthHeader from '../../context/AuthHeader';
+// import { getMessages } from '../../slices/messagesSlice';
+// import RemoveChannelModal from './Modals/RemoveChannelModal';
+import { openedModal } from '../../slices/modalSlice';
 
-const socket = io('ws://localhost:3000');
+// const socket = io('ws://localhost:3000');
 
 const Channel = ({ item, currentChannelId }) => {
   const dispatch = useDispatch();
@@ -22,29 +27,35 @@ const Channel = ({ item, currentChannelId }) => {
   const styleBtn = currentChannelId === id ? 'secondary' : 'light';
 
   const handleRemoveChannel = (e) => {
-    const channelId = e.target.id;
-    // subscribe remove channel
-    socket.on('removeChannel', (payload) => {
-      console.log(payload); // { id: 6 };
-    });
-    // emit remove channel
-    socket.emit('removeChannel', { id: channelId });
+    dispatch(openedModal({ isOpened: true, type: 'removeChannel', channelId: e.target.id }));
+    // const channelId = e.target.id;
+    // // subscribe remove channel
+    // socket.on('removeChannel', (payload) => {
+    //   console.log(payload); // { id: 6 };
+    // });
+    // // emit remove channel
+    // socket.emit('removeChannel', { id: channelId });
 
-    const fetchContent = async () => {
-      await axios.get('/api/v1/data', { headers: getAuthHeader() }).then((response) => {
-        dispatch(getChannels(response.data.channels));
-        dispatch(setCurrentChannelId(setCurrentChannelId));
-        dispatch(getMessages(response.data.messages));
-      });
-    };
+    // const fetchContent = async () => {
+    //   await axios.get('/api/v1/data', { headers: getAuthHeader() }).then((response) => {
+    //     dispatch(getChannels(response.data.channels));
+    //     dispatch(setCurrentChannelId(1));
+    //     dispatch(getMessages(response.data.messages));
+    //   });
+    // };
 
-    fetchContent();
-    console.log(e.target.id, 'e.target');
+    // fetchContent();
+    // console.log(e.target.id, 'e.target');
+  };
+
+  const handleRenameChannel = (e) => {
+    dispatch(openedModal({ isOpened: true, type: 'renameChannel', channelId: e.target.id }));
   };
 
   return (
 
     <li key={id} id={id} className="nav-item w-100">
+      {/* <RemoveChannelModal /> */}
       {removable ? (
         <Dropdown as={ButtonGroup} className="d-flex">
           <Button
@@ -67,8 +78,8 @@ const Channel = ({ item, currentChannelId }) => {
           </Dropdown.Toggle>
 
           <Dropdown.Menu>
-            <Dropdown.Item href="#/action-1" id={id} onClick={handleRemoveChannel}>Удалить</Dropdown.Item>
-            <Dropdown.Item href="#/action-2">Переименовать</Dropdown.Item>
+            <Dropdown.Item id={id} onClick={handleRemoveChannel}>Удалить</Dropdown.Item>
+            <Dropdown.Item id={id} onClick={handleRenameChannel}>Переименовать</Dropdown.Item>
           </Dropdown.Menu>
           {/* <div role="group" className="d-flex dropdown btn-group">
             <Button

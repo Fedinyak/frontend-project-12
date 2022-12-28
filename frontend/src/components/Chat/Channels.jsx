@@ -1,17 +1,24 @@
-import React, { useEffect } from 'react';
-import axios from 'axios';
+import React from 'react';
+// { useEffect }
+// import axios from 'axios';
 import {
   useSelector,
   useDispatch,
 } from 'react-redux';
 // import { Button } from 'react-bootstrap';
 // import { io } from 'socket.io-client';
-import { getChannels, setCurrentChannelId } from '../../slices/channelsSlice';
-import { getMessages } from '../../slices/messagesSlice';
+// import { getChannels, setCurrentChannelId } from '../../slices/channelsSlice';
+// import { getMessages } from '../../slices/messagesSlice';
 import Channel from './Channel';
-import ChannelModal from './ChannelModal';
-import getAuthHeader from '../../context/AuthHeader';
-import { setIsOpenedModal } from '../../slices/modalSlice';
+import Modal from './Modals/Modal';
+// import AddChannelModal from './Modals/AddChannelModal';
+// import getAuthHeader from '../../context/AuthHeader';
+import {
+  // setIsOpenedModal,
+  openedModal,
+  // closedModal,
+} from '../../slices/modalSlice';
+// import { fetchContent } from '../../slices/channelsSlice';
 // import plusBtn from '../../assets/plus-channel-btn.svg';
 // const socket = io('ws://localhost:3000');
 // const getAuthHeader = () => {
@@ -30,30 +37,34 @@ const Channels = () => {
   // console.log(stateValue, 'stateValue');
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    const fetchContent = async () => {
-      // const { data } = await axios.get('/api/v1/data',
-      // { headers: getAuthHeader() }).then((response) => {
-      await axios.get('/api/v1/data', { headers: getAuthHeader() }).then((response) => {
-        // console.log(response.data, 'response data');
-        // => { channels: [...], currentChannelId: 1, messages: [] }
-        // dispatch(getChannels(response.data.channels));
-        dispatch(getChannels(response.data.channels));
-        dispatch(setCurrentChannelId(response.data.currentChannelId));
-        dispatch(getMessages(response.data.messages));
-      });
-      // dispatch(getChannels(data));
-      // setContent(data);/
-      // console.log(data, 'data');
-    };
+  // useEffect(() => {
+  //   const fetchContent = async () => {
+  //     // const { data } = await axios.get('/api/v1/data',
+  //     // { headers: getAuthHeader() }).then((response) => {
+  //     await axios.get('/api/v1/data', { headers: getAuthHeader() }).then((response) => {
+  //       // console.log(response.data, 'response data');
+  //       // => { channels: [...], currentChannelId: 1, messages: [] }
+  //       // dispatch(getChannels(response.data.channels));
+  //       dispatch(getChannels(response.data.channels));
+  //       dispatch(setCurrentChannelId(response.data.currentChannelId));
+  //       dispatch(getMessages(response.data.messages));
+  //     });
+  //     // dispatch(getChannels(data));
+  //     // setContent(data);/
+  //     // console.log(data, 'data');
+  //   };
 
-    fetchContent();
-  }, [dispatch]);
+  //   fetchContent();
+  // }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(fetchContent());
+  // }, []);
   // console.log(channels, 'channels');
   // console.log(currentChannelId, 'currentChannelId');
 
   const addChannel = () => {
-    dispatch(setIsOpenedModal(true));
+    // dispatch(setIsOpenedModal(true));
+    dispatch(openedModal({ isOpened: true, type: 'addChannel' }));
     // socket.emit('newChannel', { name: 'new channel' });
 
   // dispatch(setCurrentChannelId(response.data.currentChannelId));
@@ -63,7 +74,8 @@ const Channels = () => {
 
   return (
     <>
-      <ChannelModal />
+      <Modal />
+      {/* <AddChannelModal /> */}
       <div className="d-flex justify-content-between mb-2 ps-4 pe-2">
         <span>Каналы</span>
         <button type="button" onClick={addChannel} className="p-0 text-primary btn btn-group-vertical">

@@ -3,8 +3,13 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
   entities: {
     isOpened: false,
-    // type: null,
-    // extra: null
+    type: null,
+    channelId: null,
+    // extra: {}
+    // type(pin):"removeChannel"
+    // extra: {
+    // channelId(pin):3
+    // }
   },
 };
 
@@ -16,9 +21,25 @@ const modalSlice = createSlice({
       // eslint-disable-next-line no-param-reassign
       state.isOpened = action.payload;
     },
+    openedModal: (state, action) => {
+      // eslint-disable-next-line no-param-reassign
+      state.entities.isOpened = action.payload.isOpened;
+      // eslint-disable-next-line no-param-reassign
+      state.entities.type = action.payload.type;
+      // eslint-disable-next-line no-param-reassign
+      state.entities.channelId = action.payload.channelId;
+    },
+    closedModal: (state) => {
+      // eslint-disable-next-line no-param-reassign
+      state.entities.isOpened = null;
+      // eslint-disable-next-line no-param-reassign
+      state.entities.type = null;
+      // eslint-disable-next-line no-param-reassign
+      state.entities.channelId = null;
+    },
   },
 });
 
-export const { setIsOpenedModal } = modalSlice.actions;
+export const { setIsOpenedModal, openedModal, closedModal } = modalSlice.actions;
 
 export default modalSlice.reducer;

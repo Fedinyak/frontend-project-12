@@ -1,20 +1,24 @@
-import axios from 'axios';
+// import axios from 'axios';
 import React, {
   // useEffect,
   useState,
 } from 'react';
 import { Form } from 'react-bootstrap';
 import {
-  useDispatch,
+  // useDispatch,
   useSelector,
   // useDispatch,
 } from 'react-redux';
-import { io } from 'socket.io-client';
-import getAuthHeader from '../../context/AuthHeader';
-import { getChannels, setCurrentChannelId } from '../../slices/channelsSlice';
-import { getMessages } from '../../slices/messagesSlice';
+// import { io } from 'socket.io-client';
+import { newMessage } from '../../context/ChatApi';
+// import { fetchMessages } from '../../slices/messagesSlice';
+// import { fetchContent } from '../../slices/messagesSlice';
+// import { fetchContent } from '../../slices/channelsSlice';
+// import getAuthHeader from '../../context/AuthHeader';
+// import { getChannels, setCurrentChannelId } from '../../slices/channelsSlice';
+// import { getMessages } from '../../slices/messagesSlice';
 
-const socket = io('ws://localhost:3000');
+// const socket = io('ws://localhost:3000');
 
 // const getAuthHeader = () => {
 //   const userId = JSON.parse(localStorage.getItem('userId'));
@@ -32,40 +36,56 @@ const Messages = () => {
   const channelTitle = channels.filter((channel) => channel.id === currentChannelId);
   const allMessages = useSelector((state) => Object.values(state.messages.entities || {}));
   const messages = allMessages.filter((message) => message.channelId === currentChannelId);
-  const username = JSON.parse(localStorage.getItem('userId'));
+  const localStorateItem = JSON.parse(localStorage.getItem('userId'));
+  const { username } = localStorateItem;
 
   const [message, setMessage] = useState('');
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   const messagesCount = (messagesInChannel) => {
     if (messagesInChannel.length - 1 === -1) {
       return 0;
     }
-    return messagesInChannel.length - 1;
+    return messagesInChannel.length;
   };
-  console.log(channels, currentChannelId, 'dfdf');
+  // console.log(channels, currentChannelId, 'dfdf');
 
   const handleSubmit = (e) => {
     e.preventDefault();
     // subscribe new messages
-    socket.on('newMessage', (payload) => {
-      console.log(payload); // => { body: "new message", channelId: 7, id: 8, username: "admin" }
-    });
-    // emit new message
-    socket.emit('newMessage', { body: message, channelId: currentChannelId, username: username.username });
+    // socket.on('newMessage', (payload) => {
+    //   console.log(payload); // => { body: "new message", channelId: 7, id: 8, username: "admin" }
+    // });
+    // // emit new message
+    // socket.emit('newMessage',
+    // { body: message, channelId: currentChannelId, username: username.username });
 
-    const fetchContent = async () => {
-      await axios.get('/api/v1/data', { headers: getAuthHeader() }).then((response) => {
-        dispatch(getChannels(response.data.channels));
-        // dispatch(setCurrentChannelId(response.data.currentChannelId));
-        dispatch(setCurrentChannelId(currentChannelId));
-        dispatch(getMessages(response.data.messages));
-      });
-    };
-
-    fetchContent();
-
+    // const fetchContent = async () => {
+    //   await axios.get('/api/v1/data', { headers: getAuthHeader() }).then((response) => {
+    //     dispatch(getChannels(response.data.channels));
+    //     // dispatch(setCurrentChannelId(response.data.currentChannelId));
+    //     dispatch(setCurrentChannelId(currentChannelId));
+    //     dispatch(getMessages(response.data.messages));
+    //   });
+    // };
+    console.log(username, '-message, -currentChannelId, -username.username');
+    // dispatch(newMessage(
+    //   {
+    //     body: message,
+    //     channelId: currentChannelId,
+    //     username,
+    //   },
+    // ));
+    newMessage(
+      {
+        body: message,
+        channelId: currentChannelId,
+        username,
+      },
+    );
+    console.log(message, 'meeeeessageeees');
     setMessage('');
+    // dispatch(fetchMessages());
   };
 
   const handleChange = (e) => {

@@ -1,19 +1,26 @@
-import axios from 'axios';
+// import axios from 'axios';
 import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 import { useDispatch, useSelector } from 'react-redux';
-import { io } from 'socket.io-client';
-import getAuthHeader from '../../context/AuthHeader';
-import { getChannels, setCurrentChannelId } from '../../slices/channelsSlice';
-import { getMessages } from '../../slices/messagesSlice';
-import { setIsOpenedModal } from '../../slices/modalSlice';
+// import { io } from 'socket.io-client';
+import { addNewChannel } from '../../../context/ChatApi';
+// import { fetchContent } from '../../../slices/channelsSlice';
+// import fetchContent from '../../../context/fetchContent';
+// import fetchContent from '../../../context/fetchContent';
+// import getAuthHeader from '../../../context/AuthHeader';
+// import { getChannels, setCurrentChannelId } from '../../../slices/channelsSlice';
+// import { getMessages } from '../../../slices/messagesSlice';
+import {
+  closedModal,
+  // setIsOpenedModal
+} from '../../../slices/modalSlice';
 
-const socket = io('ws://localhost:3000');
+// const socket = io('ws://localhost:3000');
 
-const ChannelModal = () => {
-  const show = useSelector((state) => state.modal.isOpened);
+const AddChannelModal = () => {
+  const show = useSelector((state) => state.modal.entities.isOpened);
   const [message, setMessage] = useState('');
   // const [show, setShow] = useState(false);
   // const [show, setShow] = useState(true);
@@ -30,28 +37,42 @@ const ChannelModal = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(message, 'submit');
-    socket.emit('newChannel', { name: message });
+    addNewChannel(message);
+    // socket.emit('newChannel', { name: message });
     setMessage('');
+    // dispatch(fetchContent());
+    // fetchContent();
 
-    // subscribe new channel
-    socket.on('newChannel', (payload) => {
-      console.log(payload, 'newChannel'); // { id: 6, name: "new channel", removable: true }
-    });
-
-    const fetchContent = async () => {
-      await axios.get('/api/v1/data', { headers: getAuthHeader() }).then((response) => {
-        dispatch(getChannels(response.data.channels));
-        dispatch(setCurrentChannelId(setCurrentChannelId));
-        dispatch(getMessages(response.data.messages));
-      });
-    };
-
-    fetchContent();
-
-    dispatch(setIsOpenedModal(false));
+    dispatch(closedModal());
   };
 
-  const handleClose = () => dispatch(setIsOpenedModal(false));
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   console.log(message, 'submit');
+  //   socket.emit('newChannel', { name: message });
+  //   setMessage('');
+
+  //   // subscribe new channel
+  //   socket.on('newChannel', (payload) => {
+  //     dispatch(setCurrentChannelId(payload.id));
+  //     console.log(payload, 'newChannel'); // { id: 6, name: "new channel", removable: true }
+  //     dispatch(getChannels(payload));
+  //   });
+  //   // const fetchContent = async () => {
+  //   //   await axios.get('/api/v1/data', { headers: getAuthHeader() }).then((response) => {
+  //   //     dispatch(getChannels(response.data.channels));
+  //   //     console.log(response.data.currentChannelId, 'response.data.currentChannelId');
+  //   //     // dispatch(setCurrentChannelId(response.data.currentChannelId));
+  //   //     dispatch(getMessages(response.data.messages));
+  //   //   });
+  //   // };
+
+  //   // fetchContent();
+
+  //   dispatch(closedModal());
+  // };
+
+  const handleClose = () => dispatch(closedModal());
   // const handleClose = () => dispatch(setIsOpenedModal(true));
 
   return (
@@ -95,4 +116,4 @@ const ChannelModal = () => {
   );
 };
 
-export default ChannelModal;
+export default AddChannelModal;
