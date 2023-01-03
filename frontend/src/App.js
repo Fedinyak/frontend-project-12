@@ -16,6 +16,8 @@ import NotFound from './components/NotFound';
 import AuthProvider from './context/AuthProvider';
 import Chat from './components/Chat/Chat';
 import Nav from './components/Nav/Nav';
+import useAuth from './hooks/auth';
+import SignUp from './components/Login/SignUp';
 // import AuthContext from './context/AuthContext';
 // const getAuthHeader = () => {
 //   const userId = JSON.parse(localStorage.getItem('token'));
@@ -46,13 +48,19 @@ import Nav from './components/Nav/Nav';
 // };
 
 const LoginWrap = ({ children }) => {
+  const auth = useAuth();
   const location = useLocation();
+  console.log(auth, 'auth');
+  console.log(auth.loggedIn, 'auth.loggedIn');
 
-  const userId = JSON.parse(localStorage.getItem('userId'));
-  if (userId && userId.token) {
-    return children;
-  }
-  return <Navigate to="/login" state={{ from: location }} />;
+  // const userId = JSON.parse(localStorage.getItem('userId'));
+  // if (userId && userId.token) {
+  //   return children;
+  // }
+  // return <Navigate to="/login" state={{ from: location }} />;
+  return (
+    auth.loggedIn ? children : <Navigate to="/login" state={{ from: location }} />
+  );
 };
 
 const App = () => (
@@ -69,6 +77,7 @@ const App = () => (
             }
             />
             <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<SignUp />} />
             <Route path="*" element={<NotFound />} />
           </Route>
         </Routes>
