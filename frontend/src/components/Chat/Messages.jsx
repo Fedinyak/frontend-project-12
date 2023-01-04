@@ -11,7 +11,17 @@ import {
   // useDispatch,
 } from 'react-redux';
 // import { io } from 'socket.io-client';
+// import leoProfanity from 'leo-profanity';
+// import leoProfanity from 'leo-profanity';
+import leoProfanity from '../leoProfanity';
+
 import { newMessage } from '../../context/ChatApi';
+
+// const filterEn = require('leo-profanity');
+// const filterRu = require('leo-profanity');
+
+// filterEn.loadDictionary();
+// filterRu.loadDictionary('ru');
 // import { fetchMessages } from '../../slices/messagesSlice';
 // import { fetchContent } from '../../slices/messagesSlice';
 // import { fetchContent } from '../../slices/channelsSlice';
@@ -78,9 +88,19 @@ const Messages = () => {
     //     username,
     //   },
     // ));
+
+    // const filterMessage = filter.clean('I have boob, etc.');
+    // const filterMessage = filter.clean(message);
+    // const filterEnglish = filterEn.clean(message);
+    // console.log(filterEnglish, 'filterEn');
+    // const filterMessage = filterRu.clean(filterEnglish);
+    const filterMessage = leoProfanity.clean(message);
+    // leoProfanityRu.loadDictionary('ru');
+    // const filterEn = leoProfanityEn.clean(message);
+    // const filterMessage = leoProfanityRu.clean(message);
     newMessage(
       {
-        body: message,
+        body: filterMessage,
         channelId: currentChannelId,
         username,
       },

@@ -25,6 +25,7 @@ import {
   closedModal,
   // setIsOpenedModal
 } from '../../../slices/modalSlice';
+import leoProfanity from '../../leoProfanity';
 
 // const socket = io('ws://localhost:3000');
 
@@ -105,7 +106,7 @@ const AddChannelModal = () => {
         onSubmit={(values) => {
           // setAuthFailed(false);
           console.log(values, 'submit');
-          addNewChannel(values.channelName);
+          addNewChannel(leoProfanity.clean(values.channelName));
           // socket.emit('newChannel', { name: message });
           // dispatch(fetchContent());
           // fetchContent();

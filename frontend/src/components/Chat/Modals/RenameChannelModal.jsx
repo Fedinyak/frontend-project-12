@@ -14,6 +14,7 @@ import { renameChannel } from '../../../context/ChatApi';
 import {
   closedModal,
 } from '../../../slices/modalSlice';
+import leoProfanity from '../../leoProfanity';
 
 const RenameChannelModal = () => {
   const { t } = useTranslation();
@@ -53,7 +54,7 @@ const RenameChannelModal = () => {
       onSubmit={(values) => {
       // setAuthFailed(false);
         console.log(values, 'submit');
-        renameChannel({ id: channelId, name: values.channelName });
+        renameChannel({ id: channelId, name: leoProfanity.clean(values.channelName) });
         toast.success(t('chat.channelIsRenamed'));
         // addNewChannel(values.channelName);
         // socket.emit('newChannel', { name: message });
