@@ -6,6 +6,8 @@ import {
 } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { I18nextProvider } from 'react-i18next';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import AuthProvider from './context/AuthProvider';
@@ -20,6 +22,7 @@ root.render(
   <React.StrictMode>
     <Router>
       <I18nextProvider i18n={i18n}>
+        <ToastContainer />
         <Provider store={store}>
           <AuthProvider>
             <App />

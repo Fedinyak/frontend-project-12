@@ -10,6 +10,10 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import * as Yup from 'yup';
 // import { io } from 'socket.io-client';
+import {
+  // ToastContainer,
+  toast,
+} from 'react-toastify';
 import { addNewChannel } from '../../../context/ChatApi';
 // import { fetchContent } from '../../../slices/channelsSlice';
 // import fetchContent from '../../../context/fetchContent';
@@ -36,7 +40,7 @@ const AddChannelModal = () => {
   const dispatch = useDispatch();
 
   const schema = Yup.object({
-    channelName: Yup.mixed().notOneOf(channelsName, `${t('chat.mustBeUnicName')}`),
+    channelName: Yup.string().min(3, `${t('chat.from3to20Symbols')}`).max(20, `${t('chat.from3to20Symbols')}`).notOneOf(channelsName, `${t('chat.mustBeUnicName')}`),
     // username: Yup.string().min(2, 'Must be 3 characters or more').required('Required'),
   });
 
@@ -105,6 +109,7 @@ const AddChannelModal = () => {
           // socket.emit('newChannel', { name: message });
           // dispatch(fetchContent());
           // fetchContent();
+          toast.success(t('chat.channelIsCreated'));
           dispatch(closedModal());
           // try {
           //   const response = await axios.post('/api/v1/login', values);
@@ -143,7 +148,6 @@ const AddChannelModal = () => {
               </Modal.Title>
             </Modal.Header>
             <Modal.Body>
-
               <Form
                 noValidate
                 // noValidate

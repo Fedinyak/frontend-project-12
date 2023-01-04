@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 // import { io } from 'socket.io-client';
 // import getAuthHeader from '../../../context/AuthHeader';
+import { toast } from 'react-toastify';
 import { removeChannel } from '../../../context/ChatApi';
 // import { getChannels, setCurrentChannelId } from '../../../slices/channelsSlice';
 // import { getMessages } from '../../../slices/messagesSlice';
@@ -13,7 +14,6 @@ import {
   // openedModal,
   closedModal,
 } from '../../../slices/modalSlice';
-
 // const socket = io('ws://localhost:3000');
 
 const RemoveChannelModal = () => {
@@ -28,6 +28,7 @@ const RemoveChannelModal = () => {
     e.preventDefault();
     console.log(channelId, 'channelId rem');
     removeChannel(channelId);
+    toast.success(t('chat.channelIsDeleted'));
     // const channelId = e.target.id;
     // subscribe remove channel
     // socket.on('removeChannel', (payload) => {

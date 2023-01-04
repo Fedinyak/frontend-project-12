@@ -9,6 +9,7 @@ import Modal from 'react-bootstrap/Modal';
 import * as Yup from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 import { renameChannel } from '../../../context/ChatApi';
 import {
   closedModal,
@@ -53,6 +54,7 @@ const RenameChannelModal = () => {
       // setAuthFailed(false);
         console.log(values, 'submit');
         renameChannel({ id: channelId, name: values.channelName });
+        toast.success(t('chat.channelIsRenamed'));
         // addNewChannel(values.channelName);
         // socket.emit('newChannel', { name: message });
         // dispatch(fetchContent());

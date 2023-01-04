@@ -38,6 +38,9 @@ const ru = {
       youCanGoTo: 'Но вы можете перейти',
       mainPage: 'на главную страницу',
       signOut: 'Выйти',
+      channelIsCreated: 'Канал создан',
+      channelIsDeleted: 'Канал удален',
+      channelIsRenamed: 'Канал переименован',
     },
   },
 };

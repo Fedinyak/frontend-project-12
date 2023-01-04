@@ -11,13 +11,15 @@ import {
 //   // useEffect,
 // } from 'react';
 // import { useEffect } from 'react';
+import { useContext } from 'react';
 import Login from './components/Login/Login';
 import NotFound from './components/NotFound';
 import AuthProvider from './context/AuthProvider';
 import Chat from './components/Chat/Chat';
 import Nav from './components/Nav/Nav';
-import useAuth from './hooks/auth';
+// import useAuth from './hooks/auth';
 import SignUp from './components/Login/SignUp';
+import AuthContext from './context/AuthContext';
 // import AuthContext from './context/AuthContext';
 // const getAuthHeader = () => {
 //   const userId = JSON.parse(localStorage.getItem('token'));
@@ -48,7 +50,8 @@ import SignUp from './components/Login/SignUp';
 // };
 
 const LoginWrap = ({ children }) => {
-  const auth = useAuth();
+  // const auth = useAuth();
+  const auth = useContext(AuthContext);
   const location = useLocation();
   console.log(auth, 'auth');
   console.log(auth.loggedIn, 'auth.loggedIn');
