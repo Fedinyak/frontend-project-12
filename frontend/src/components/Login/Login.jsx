@@ -6,6 +6,7 @@ import {
   Button, Card, Col, Container, Form, Row,
 } from 'react-bootstrap';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import loginImg from '../../assets/login.jpeg';
 // import AuthContext from '../../context/AuthContext';
 import useAuth from '../../hooks/auth';
@@ -25,6 +26,7 @@ const schema = Yup.object({
 // };
 
 const Login = () => {
+  const { t } = useTranslation();
   const auth = useAuth();
   const [authFailed, setAuthFailed] = useState(false);
   const inputRef = useRef();
@@ -113,7 +115,7 @@ const Login = () => {
                     onSubmit={handleSubmit}
                     className="col-12 col-md-6 mt-3 mt-mb-0"
                   >
-                    <h1 className="text-center mb-4">Войти</h1>
+                    <h1 className="text-center mb-4">{t('chat.enter')}</h1>
                     <Form.Group className="form-floating mb-3">
                       <Form.Control
                         type="username"
@@ -128,7 +130,7 @@ const Login = () => {
                         isInvalid={authFailed}
                       />
                       <Form.Label htmlFor="username">
-                        Ваш ник
+                        {t('chat.yourNickname')}
                       </Form.Label>
                     </Form.Group>
                     {/* {errors.username && touched.username && errors.username} */}
@@ -145,11 +147,11 @@ const Login = () => {
                         isInvalid={authFailed}
                       />
                       <Form.Label htmlFor="password">
-                        Пароль
+                        {t('chat.password')}
                       </Form.Label>
                       <Form.Control.Feedback type="invalid" tooltip>
                         {/* {errors.password} */}
-                        Неверные имя пользователя или пароль
+                        {t('chat.wrongNameOrPassword')}
                       </Form.Control.Feedback>
                     </Form.Group>
                     {/* <Form.Group.Feedback type="invalid" tooltip>
@@ -162,7 +164,7 @@ const Login = () => {
                       variant="outline-primary"
                       className="w-100 mb-3"
                     >
-                      Войти
+                      {t('chat.enter')}
                     </Button>
                   </Form>
                 )}
@@ -170,8 +172,11 @@ const Login = () => {
             </Card.Body>
             <Card.Footer className=" p-4">
               <div className="text-center">
-                <span>Нет аккаунта? </span>
-                <Link to="/signup">Регистрация</Link>
+                <span>
+                  {t('chat.haveNotAccount')}
+                  {' '}
+                </span>
+                <Link to="/signup">{t('chat.registration')}</Link>
               </div>
             </Card.Footer>
           </Card>

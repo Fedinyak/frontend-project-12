@@ -12,16 +12,12 @@ import {
   // Link,
   useLocation, useNavigate,
 } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import signupImg from '../../assets/signup.jpg';
 import useAuth from '../../hooks/auth';
 
-const schema = Yup.object({
-  username: Yup.string().min(3, 'От 3 до 20 символов').max(20, 'От 3 до 20 символов').required('Обязательное поле'),
-  password: Yup.string().min(6, 'Не менее 6 символов').required('Обязательное поле'),
-  confirmPassword: Yup.string().oneOf([Yup.ref('password')], ' Пароли должны совпадать').required('Обязательное поле'),
-});
-
 const SignUp = () => {
+  const { t } = useTranslation();
   const auth = useAuth();
   const [authFailed, setAuthFailed] = useState(false);
   const inputRef = useRef();
@@ -30,6 +26,12 @@ const SignUp = () => {
   useEffect(() => {
     inputRef.current.focus();
   }, []);
+
+  const schema = Yup.object({
+    username: Yup.string().min(3, `${t('chat.from3to20Symbols')}`).max(20, `${t('chat.from3to20Symbols')}`).required(`${t('chat.requiredField')}`),
+    password: Yup.string().min(6, `${t('chat.min6Symbols')}`).required(`${t('chat.requiredField')}`),
+    confirmPassword: Yup.string().oneOf([Yup.ref('password')], `${t('chat.passwordMustBeEqual')}`).required(`${t('chat.requiredField')}`),
+  });
 
   return (
     <Container fluid className="h-100">
@@ -42,7 +44,7 @@ const SignUp = () => {
                 md={6}
                 className="d-flex align-items-center justify-content-center"
               >
-                <Card.Img src={signupImg} className="rounded-circle" alt="Войти" />
+                <Card.Img src={signupImg} className="rounded-circle" alt={t('chat.enter')} />
               </Col>
               <Formik
                 initialValues={{ username: '', password: '', confirmPassword: '' }}
@@ -92,7 +94,7 @@ const SignUp = () => {
                     onSubmit={handleSubmit}
                     className="col-12 col-md-6 mt-3 mt-mb-0"
                   >
-                    <h1 className="text-center mb-4">Регистрация</h1>
+                    <h1 className="text-center mb-4">{t('chat.registration')}</h1>
                     <Form.Group className="form-floating mb-3">
                       <Form.Control
                         type="text"
@@ -108,7 +110,7 @@ const SignUp = () => {
                         isInvalid={(touched.username && errors.username) || authFailed}
                       />
                       <Form.Label htmlFor="username">
-                        Имя пользователя
+                        {t('chat.userName')}
                       </Form.Label>
                       <Form.Control.Feedback type="invalid" tooltip>
                         {errors.username}
@@ -129,7 +131,7 @@ const SignUp = () => {
                         isInvalid={(touched.password && errors.password) || authFailed}
                       />
                       <Form.Label htmlFor="password">
-                        Пароль
+                        {t('chat.password')}
                       </Form.Label>
                       <Form.Control.Feedback type="invalid" tooltip>
                         {errors.password}
@@ -149,11 +151,11 @@ const SignUp = () => {
                           && errors.confirmPassword) || authFailed}
                       />
                       <Form.Label htmlFor="password">
-                        Подтвердите пароль
+                        {t('chat.passwordConfirm')}
                       </Form.Label>
                       <Form.Control.Feedback type="invalid" tooltip>
                         {errors.confirmPassword}
-                        {authFailed && 'Такой пользователь уже существует'}
+                        {authFailed && t('chat.userAlreadyExist')}
                         {/* Пароли должны совпадать */}
                       </Form.Control.Feedback>
                     </Form.Group>
@@ -167,7 +169,7 @@ const SignUp = () => {
                       variant="outline-primary"
                       className="w-100 mb-3"
                     >
-                      Зарегистрироваться
+                      {t('chat.register')}
                     </Button>
                   </Form>
                 )}

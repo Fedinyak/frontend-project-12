@@ -6,6 +6,7 @@ import React
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
+import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import * as Yup from 'yup';
 // import { io } from 'socket.io-client';
@@ -24,6 +25,7 @@ import {
 // const socket = io('ws://localhost:3000');
 
 const AddChannelModal = () => {
+  const { t } = useTranslation();
   const show = useSelector((state) => state.modal.entities.isOpened);
   const channels = useSelector((state) => Object.values(state.channels.entities || {}));
   const channelsName = channels.map((channel) => channel.name);
@@ -34,7 +36,7 @@ const AddChannelModal = () => {
   const dispatch = useDispatch();
 
   const schema = Yup.object({
-    channelName: Yup.mixed().notOneOf(channelsName),
+    channelName: Yup.mixed().notOneOf(channelsName, `${t('chat.mustBeUnicName')}`),
     // username: Yup.string().min(2, 'Must be 3 characters or more').required('Required'),
   });
 
@@ -136,7 +138,9 @@ const AddChannelModal = () => {
 
           <Modal show={show} onHide={handleClose}>
             <Modal.Header closeButton>
-              <Modal.Title>Добавить канал</Modal.Title>
+              <Modal.Title>
+                {t('chat.addChannel')}
+              </Modal.Title>
             </Modal.Header>
             <Modal.Body>
 
@@ -146,7 +150,9 @@ const AddChannelModal = () => {
                 // validated={authFailed}
               >
                 <Form.Group hasValidation className="mb-3" controlId="exampleForm.ControlInput1">
-                  <Form.Label className="visually-hidden">Имя канала</Form.Label>
+                  <Form.Label className="visually-hidden">
+                    {t('chat.channelName')}
+                  </Form.Label>
                   <Form.Control
                     // type="channelName"
                     name="channelName"
@@ -167,8 +173,8 @@ const AddChannelModal = () => {
                     // isInvalid
                   />
                   <Form.Control.Feedback type="invalid">
-                    {/* {errors.channelName} */}
-                    Должно быть уникальным
+                    {errors.channelName}
+                    {/* Должно быть уникальным */}
                   </Form.Control.Feedback>
                 </Form.Group>
               </Form>
@@ -181,11 +187,11 @@ const AddChannelModal = () => {
                 type="submit"
                 disabled={isSubmitting}
               >
-                Отменить
+                {t('chat.cancel')}
               </Button>
               {/* <Button type="submit" variant="primary" onClick={handleClose}> */}
               <Button type="submit" variant="primary" onClick={handleSubmit}>
-                Отправить
+                {t('chat.submit')}
               </Button>
             </Modal.Footer>
           </Modal>

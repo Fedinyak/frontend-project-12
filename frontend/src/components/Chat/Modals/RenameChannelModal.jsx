@@ -8,12 +8,14 @@ import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 import * as Yup from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import { renameChannel } from '../../../context/ChatApi';
 import {
   closedModal,
 } from '../../../slices/modalSlice';
 
 const RenameChannelModal = () => {
+  const { t } = useTranslation();
   const show = useSelector((state) => state.modal.entities.isOpened);
   const channelId = useSelector((state) => state.modal.entities.channelId);
   const channels = useSelector((state) => Object.values(state.channels.entities || {}));
@@ -22,7 +24,7 @@ const RenameChannelModal = () => {
   const dispatch = useDispatch();
 
   const schema = Yup.object({
-    channelName: Yup.mixed().notOneOf(channelsName),
+    channelName: Yup.mixed().notOneOf(channelsName, `${t('chat.mustBeUnicName')}`),
   });
 
   // const handleChange = (e) => {
@@ -88,14 +90,16 @@ const RenameChannelModal = () => {
 
         <Modal show={show} onHide={handleClose}>
           <Modal.Header closeButton>
-            <Modal.Title>Переименовать канал</Modal.Title>
+            <Modal.Title>{t('chat.renameChannel')}</Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <Form
               noValidate
             >
               <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                <Form.Label className="visually-hidden">Имя канала</Form.Label>
+                <Form.Label className="visually-hidden">
+                  {t('chat.channelName')}
+                </Form.Label>
                 <Form.Control
                   name="channelName"
                   type="text"
@@ -107,18 +111,18 @@ const RenameChannelModal = () => {
                   isInvalid={!!errors.channelName}
                 />
                 <Form.Control.Feedback type="invalid">
-                  Должно быть уникальным
+                  {errors.channelName}
                 </Form.Control.Feedback>
               </Form.Group>
             </Form>
           </Modal.Body>
           <Modal.Footer>
             <Button variant="secondary" onClick={handleClose}>
-              Отменить
+              {t('chat.cancel')}
             </Button>
             {/* <Button type="submit" variant="primary" onClick={handleClose}> */}
             <Button type="submit" variant="primary" onClick={handleSubmit}>
-              Отправить
+              {t('chat.submit')}
             </Button>
           </Modal.Footer>
         </Modal>

@@ -2,6 +2,7 @@
 import React from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
+import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 // import { io } from 'socket.io-client';
 // import getAuthHeader from '../../../context/AuthHeader';
@@ -16,6 +17,7 @@ import {
 // const socket = io('ws://localhost:3000');
 
 const RemoveChannelModal = () => {
+  const { t } = useTranslation();
   // const show = useSelector((state) => state.modal.isOpened);
   const show = useSelector((state) => state.modal.entities.isOpened);
   const channelId = useSelector((state) => state.modal.entities.channelId);
@@ -63,18 +65,18 @@ const RemoveChannelModal = () => {
       {/* <Modal show={show} onHide={handleClose}> */}
       <Modal show={show} onHide={() => dispatch(closedModal())}>
         <Modal.Header closeButton>
-          <Modal.Title>Удалить канал</Modal.Title>
+          <Modal.Title>{t('chat.channelRemove')}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <p className="lead">Уверены?</p>
+          <p className="lead">{t('chat.channelAgree')}</p>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={() => dispatch(closedModal())}>
-            Отменить
+            {t('chat.cancel')}
           </Button>
           {/* <Button type="submit" variant="primary" onClick={handleClose}> */}
           <Button type="submit" variant="danger" onClick={handleSubmit}>
-            Удалить
+            {t('chat.delete')}
           </Button>
         </Modal.Footer>
       </Modal>

@@ -6,6 +6,7 @@ import {
   Navbar,
   // Form, Row,
 } from 'react-bootstrap';
+import { useTranslation } from 'react-i18next';
 import {
 // Link,
 // useLocation
@@ -28,8 +29,8 @@ import useAuth from '../../hooks/auth';
 //     </>
 //   );
 const Nav = ({ children }) => {
+  const { t } = useTranslation();
   const auth = useAuth();
-
   return (
     <div className="h-100 bg-light">
 
@@ -46,7 +47,11 @@ const Nav = ({ children }) => {
             {/* </ul> */}
             <Navbar.Brand href="/">Hexlet Chat</Navbar.Brand>
             {/* <Button type="button" variant="btn btn-primary">Выйти</Button> */}
-            {auth.loggedIn && <Button onClick={auth.logOut} variant="btn btn-primary">Выйти</Button>}
+            {auth.loggedIn && (
+            <Button onClick={auth.logOut} variant="btn btn-primary">
+              {t('chat.signOut')}
+            </Button>
+            )}
           </Container>
 
         </Navbar>

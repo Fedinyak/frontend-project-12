@@ -7,6 +7,7 @@ import { Button, Dropdown } from 'react-bootstrap';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 // import { io } from 'socket.io-client';
 // import axios from 'axios';
+import { useTranslation } from 'react-i18next';
 import {
   // getChannels,
   setCurrentChannelId,
@@ -19,6 +20,7 @@ import { openedModal } from '../../slices/modalSlice';
 // const socket = io('ws://localhost:3000');
 
 const Channel = ({ item, currentChannelId }) => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const { id, name, removable } = item;
   const handleClick = (currentId) => {
@@ -74,12 +76,12 @@ const Channel = ({ item, currentChannelId }) => {
             id="dropdown-split-basic"
             aria-expanded="false"
           >
-            <span className="visually-hidden">Управление каналом</span>
+            <span className="visually-hidden">{t('chat.channelControl')}</span>
           </Dropdown.Toggle>
 
           <Dropdown.Menu>
-            <Dropdown.Item id={id} onClick={handleRemoveChannel}>Удалить</Dropdown.Item>
-            <Dropdown.Item id={id} onClick={handleRenameChannel}>Переименовать</Dropdown.Item>
+            <Dropdown.Item id={id} onClick={handleRemoveChannel}>{t('chat.delete')}</Dropdown.Item>
+            <Dropdown.Item id={id} onClick={handleRenameChannel}>{t('chat.channelRename')}</Dropdown.Item>
           </Dropdown.Menu>
           {/* <div role="group" className="d-flex dropdown btn-group">
             <Button
