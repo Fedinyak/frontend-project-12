@@ -30,7 +30,9 @@ const SignUp = () => {
   const schema = Yup.object({
     username: Yup.string().min(3, `${t('chat.from3to20Symbols')}`).max(20, `${t('chat.from3to20Symbols')}`).required(`${t('chat.requiredField')}`),
     password: Yup.string().min(6, `${t('chat.min6Symbols')}`).required(`${t('chat.requiredField')}`),
-    confirmPassword: Yup.string().oneOf([Yup.ref('password')], `${t('chat.passwordMustBeEqual')}`).required(`${t('chat.requiredField')}`),
+    confirmPassword: Yup.string().oneOf([Yup.ref('password')], `${t('chat.passwordMustBeEqual')}`),
+    // confirmPassword: Yup.string().oneOf([Yup.ref('password')],
+    // `${t('chat.passwordMustBeEqual')}`).required(`${t('chat.requiredField')}`),
   });
 
   return (
