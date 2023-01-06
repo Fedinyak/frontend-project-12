@@ -101,6 +101,7 @@ const SignUp = () => {
                       <Form.Control
                         type="text"
                         name="username"
+                        id="username"
                         onChange={handleChange}
                         onBlur={handleBlur}
                         value={values.username}
@@ -123,6 +124,7 @@ const SignUp = () => {
                       <Form.Control
                         type="password"
                         name="password"
+                        id="password"
                         onChange={handleChange}
                         onBlur={handleBlur}
                         value={values.password}
@@ -142,6 +144,7 @@ const SignUp = () => {
                     <Form.Group className="form-floating mb-4">
                       <Form.Control
                         type="password"
+                        id="confirmPassword"
                         name="confirmPassword"
                         onChange={handleChange}
                         onBlur={handleBlur}
