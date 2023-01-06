@@ -145,6 +145,7 @@ const Messages = () => {
           <div className="input-group has-validation">
             <input
               name="body"
+              id="body"
               aria-label={t('chat.newMessage')}
               placeholder={t('chat.enterMessage')}
               className="border-0 p-0 ps-2 form-control"

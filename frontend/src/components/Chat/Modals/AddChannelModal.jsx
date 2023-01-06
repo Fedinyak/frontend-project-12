@@ -155,12 +155,13 @@ const AddChannelModal = () => {
                 // validated={authFailed}
               >
                 <Form.Group hasValidation className="mb-3" controlId="exampleForm.ControlInput1">
-                  <Form.Label className="visually-hidden">
+                  <Form.Label htmlFor="channelName" className="visually-hidden">
                     {t('chat.channelName')}
                   </Form.Label>
                   <Form.Control
                     // type="channelName"
                     name="channelName"
+                    id="channelName"
                     // type="input"
                     type="text"
                     onChange={handleChange}

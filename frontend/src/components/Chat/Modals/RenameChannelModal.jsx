@@ -100,11 +100,12 @@ const RenameChannelModal = () => {
               noValidate
             >
               <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                <Form.Label className="visually-hidden">
+                <Form.Label htmlFor="channelName" className="visually-hidden">
                   {t('chat.channelName')}
                 </Form.Label>
                 <Form.Control
                   name="channelName"
+                  id="channelName"
                   type="text"
                   onChange={handleChange}
                   onBlur={handleBlur}
