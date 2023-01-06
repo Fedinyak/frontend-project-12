@@ -1,5 +1,6 @@
 import React, {
   // useState,
+  useEffect,
   useRef,
 } from 'react';
 import { Form, Button, InputGroup } from 'react-bootstrap';
@@ -20,6 +21,10 @@ const Messages = () => {
   const localStorateItem = JSON.parse(localStorage.getItem('userId'));
   const { username } = localStorateItem;
   const inputRef = useRef();
+
+  useEffect(() => {
+    inputRef.current.focus();
+  }, []);
 
   // const [message, setMessage] = useState('');
 
