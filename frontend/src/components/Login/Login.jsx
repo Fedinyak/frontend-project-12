@@ -120,6 +120,7 @@ const Login = () => {
                       <Form.Control
                         type="username"
                         name="username"
+                        id="username"
                         onChange={handleChange}
                         onBlur={handleBlur}
                         value={values.username}
@@ -138,6 +139,7 @@ const Login = () => {
                       <Form.Control
                         type="password"
                         name="password"
+                        id="password"
                         onChange={handleChange}
                         onBlur={handleBlur}
                         value={values.password}
