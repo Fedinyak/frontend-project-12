@@ -77,7 +77,8 @@ const Messages = () => {
         <Formik
           initialValues={{ body: '' }}
           // validationSchema={schema}
-          onSubmit={async (values, { resetForm }) => {
+          // onSubmit={async (values, { resetForm }) => {
+          onSubmit={(values, { resetForm }) => {
             console.log(values, '-message, -currentChannelId, -username.username');
 
             const filterMessage = leoProfanity.clean(values.body);
@@ -117,6 +118,7 @@ const Messages = () => {
                   placeholder={t('chat.enterMessage')}
                   className="border-0 p-0 ps-2 form-control"
                   onChange={handleChange}
+                  autoComplete="off"
                   ref={inputRef}
                   value={values.body}
                 />
