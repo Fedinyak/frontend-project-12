@@ -152,12 +152,11 @@ const SignUp = () => {
                         isInvalid={(touched.confirmPassword
                           && errors.confirmPassword) || authFailed}
                       />
-                      <Form.Label htmlFor="password">
+                      <Form.Label htmlFor="confirmPassword">
                         {t('chat.passwordConfirm')}
                       </Form.Label>
                       <Form.Control.Feedback type="invalid" tooltip>
-                        {errors.confirmPassword}
-                        {authFailed && t('chat.userAlreadyExist')}
+                        {errors.confirmPassword || (authFailed && t('chat.userAlreadyExist'))}
                         {/* Пароли должны совпадать */}
                       </Form.Control.Feedback>
                     </Form.Group>
