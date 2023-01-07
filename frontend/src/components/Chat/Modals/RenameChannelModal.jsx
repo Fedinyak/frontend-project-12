@@ -1,8 +1,9 @@
 // import axios from 'axios';
 import { Formik } from 'formik';
-import React
-// { useState }
-  from 'react';
+import React, {
+  useEffect,
+  useRef,
+} from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
@@ -24,6 +25,11 @@ const RenameChannelModal = () => {
   const channelsName = channels.map((channel) => channel.name);
   // const [text, setText] = useState('');
   const dispatch = useDispatch();
+  const inputRef = useRef();
+
+  useEffect(() => {
+    inputRef.current.focus();
+  }, []);
 
   const schema = Yup.object({
     channelName: Yup.mixed().notOneOf(channelsName, `${t('chat.mustBeUnicName')}`),
@@ -98,6 +104,7 @@ const RenameChannelModal = () => {
           <Modal.Body>
             <Form
               noValidate
+              onSubmit={handleSubmit}
             >
               <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                 <Form.Label htmlFor="channelName" className="visually-hidden">
@@ -112,6 +119,7 @@ const RenameChannelModal = () => {
                   value={values.channelName}
                   placeholder=""
                   autoFocus
+                  ref={inputRef}
                   isInvalid={!!errors.channelName}
                 />
                 <Form.Control.Feedback type="invalid">
@@ -125,7 +133,7 @@ const RenameChannelModal = () => {
               {t('chat.cancel')}
             </Button>
             {/* <Button type="submit" variant="primary" onClick={handleClose}> */}
-            <Button type="submit" variant="primary" onClick={handleSubmit}>
+            <Button type="submit" variant="primary" onSubmit={handleSubmit}>
               {t('chat.submit')}
             </Button>
           </Modal.Footer>
