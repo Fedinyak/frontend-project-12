@@ -108,7 +108,7 @@ const Messages = () => {
             // isSubmitting,
           }) => (
             <Form
-              noValidate=""
+              noValidate
               className="py-1 border rounded-2"
               onSubmit={handleSubmit}
             >

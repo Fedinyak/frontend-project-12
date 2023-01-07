@@ -16,7 +16,8 @@ import {
   addMessage,
 } from '../slices/messagesSlice';
 
-const socket = io('ws://localhost:3000');
+// const socket = io('ws://localhost:3000');
+const socket = io();
 
 export const newMessage = ({ body, channelId, username }) => {
   console.log(body, channelId, username, 'usernam');
