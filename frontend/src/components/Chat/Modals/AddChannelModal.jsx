@@ -1,8 +1,10 @@
 // import axios from 'axios';
 import { Formik } from 'formik';
-import React
-// { useState }
-  from 'react';
+import React, {
+  // useState,
+  useEffect,
+  useRef,
+} from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
@@ -39,6 +41,11 @@ const AddChannelModal = () => {
   // const [show, setShow] = useState(false);
   // const [show, setShow] = useState(true);
   const dispatch = useDispatch();
+  const inputRef = useRef();
+
+  useEffect(() => {
+    inputRef.current.focus();
+  }, []);
 
   const schema = Yup.object({
     channelName: Yup.string().min(3, `${t('chat.from3to20Symbols')}`).max(20, `${t('chat.from3to20Symbols')}`).notOneOf(channelsName, `${t('chat.mustBeUnicName')}`),
@@ -150,6 +157,7 @@ const AddChannelModal = () => {
             </Modal.Header>
             <Modal.Body>
               <Form
+                onSubmit={handleSubmit}
                 noValidate
                 // noValidate
                 // validated={authFailed}
@@ -167,7 +175,7 @@ const AddChannelModal = () => {
                     onChange={handleChange}
                     onBlur={handleBlur}
                     value={values.channelName}
-                    // ref={inputRef}
+                    ref={inputRef}
                     // onChange={handleChange}
                     // value={message}
                     placeholder=""
@@ -196,7 +204,7 @@ const AddChannelModal = () => {
                 {t('chat.cancel')}
               </Button>
               {/* <Button type="submit" variant="primary" onClick={handleClose}> */}
-              <Button type="submit" variant="primary" onClick={handleSubmit}>
+              <Button type="submit" variant="primary" onSubmit={handleSubmit}>
                 {t('chat.submit')}
               </Button>
             </Modal.Footer>
