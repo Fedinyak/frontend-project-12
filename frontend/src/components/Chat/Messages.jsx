@@ -22,10 +22,6 @@ const Messages = () => {
   const { username } = localStorateItem;
   const inputRef = useRef();
 
-  useEffect(() => {
-    inputRef.current.focus();
-  }, []);
-
   // const [message, setMessage] = useState('');
 
   const messagesCount = (messagesInChannel) => {
@@ -56,6 +52,9 @@ const Messages = () => {
   // const handleChange = (e) => {
   //   setMessage(e.target.value);
   // };
+  useEffect(() => {
+    inputRef.current.focus();
+  }, [currentChannelId]);
 
   return (
     <div className="d-flex flex-column h-100">
