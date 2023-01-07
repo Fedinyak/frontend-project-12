@@ -1,6 +1,7 @@
 import { createAsyncThunk, createEntityAdapter, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 import getAuthHeader from '../context/AuthHeader';
+import routes from '../routes';
 
 // Начальное значение
 // const initialState = {
@@ -19,7 +20,7 @@ const initialState = channelsAdapter.getInitialState({ currentChannelId: 1 });
 export const fetchContent = createAsyncThunk(
   'fetchContent',
   async () => {
-    const response = await axios.get('/api/v1/data', { headers: getAuthHeader() });
+    const response = await axios.get(routes.dataPath(), { headers: getAuthHeader() });
     console.log(response.data, 'response.data');
     // .then((response) => {
     // const dispatch = useDispatch();

@@ -15,6 +15,7 @@ import {
 import { useTranslation } from 'react-i18next';
 import signupImg from '../../assets/signup.jpg';
 import useAuth from '../../hooks/auth';
+import routes from '../../routes';
 
 const SignUp = () => {
   const { t } = useTranslation();
@@ -55,7 +56,8 @@ const SignUp = () => {
                   // console.log({username, password}, username?)
                   setAuthFailed(false);
                   try {
-                    const response = await axios.post('/api/v1/signup', values);
+                    // const response = await axios.post('/api/v1/signup', values);
+                    const response = await axios.post(routes.loginPath(), values);
                     // console.log(response, 'response Login');
                     // localStorage.setItem('token', response.data.token);
                     localStorage.setItem('userId', JSON.stringify(response.data));

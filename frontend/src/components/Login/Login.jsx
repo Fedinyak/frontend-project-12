@@ -10,6 +10,7 @@ import { useTranslation } from 'react-i18next';
 import loginImg from '../../assets/login.jpeg';
 // import AuthContext from '../../context/AuthContext';
 import useAuth from '../../hooks/auth';
+import routes from '../../routes';
 
 const schema = Yup.object({
   // username: Yup.string().min(2, 'Must be 3 characters or more').required('Required'),
@@ -60,7 +61,8 @@ const Login = () => {
                 onSubmit={async (values, { setSubmitting }) => {
                   setAuthFailed(false);
                   try {
-                    const response = await axios.post('/api/v1/login', values);
+                    // const response = await axios.post('/api/v1/login', values);
+                    const response = await axios.post(routes.loginPath(), values);
                     console.log(response, 'response Login');
                     // localStorage.setItem('token', response.data.token);
                     localStorage.setItem('userId', JSON.stringify(response.data));
