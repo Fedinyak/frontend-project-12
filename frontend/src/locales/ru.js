@@ -40,7 +40,7 @@ export default {
         mainPage: 'на главную страницу',
         signOut: 'Выйти',
         channelIsCreated: 'Канал создан',
-        channelIsDeleted: 'Канал удален',
+        channelIsDeleted: 'Канал удалён',
         channelIsRenamed: 'Канал переименован',
       },
     },

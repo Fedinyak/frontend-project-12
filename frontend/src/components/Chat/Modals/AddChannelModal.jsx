@@ -162,7 +162,7 @@ const AddChannelModal = () => {
                 // noValidate
                 // validated={authFailed}
               >
-                <Form.Group hasValidation className="mb-3" controlId="exampleForm.ControlInput1">
+                <Form.Group hasValidation className="mb-3">
                   <Form.Label htmlFor="channelName" className="visually-hidden">
                     {t('chat.channelName')}
                   </Form.Label>
@@ -204,7 +204,7 @@ const AddChannelModal = () => {
                 {t('chat.cancel')}
               </Button>
               {/* <Button type="submit" variant="primary" onClick={handleClose}> */}
-              <Button type="submit" variant="primary" onSubmit={handleSubmit}>
+              <Button type="submit" variant="primary" onClick={handleSubmit}>
                 {t('chat.submit')}
               </Button>
             </Modal.Footer>

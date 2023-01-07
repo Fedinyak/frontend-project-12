@@ -32,7 +32,7 @@ const RenameChannelModal = () => {
   }, []);
 
   const schema = Yup.object({
-    channelName: Yup.mixed().notOneOf(channelsName, `${t('chat.mustBeUnicName')}`),
+    channelName: Yup.string().min(3, `${t('chat.from3to20Symbols')}`).max(20, `${t('chat.from3to20Symbols')}`).notOneOf(channelsName, `${t('chat.mustBeUnicName')}`),
   });
 
   // const handleChange = (e) => {
@@ -98,15 +98,15 @@ const RenameChannelModal = () => {
       }) => (
 
         <Modal show={show} onHide={handleClose}>
-          <Modal.Header closeButton>
-            <Modal.Title>{t('chat.renameChannel')}</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <Form
-              noValidate
-              onSubmit={handleSubmit}
-            >
-              <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+          <Form
+            noValidate
+            onSubmit={handleSubmit}
+          >
+            <Modal.Header closeButton>
+              <Modal.Title>{t('chat.renameChannel')}</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <Form.Group className="mb-3">
                 <Form.Label htmlFor="channelName" className="visually-hidden">
                   {t('chat.channelName')}
                 </Form.Label>
@@ -126,17 +126,17 @@ const RenameChannelModal = () => {
                   {errors.channelName}
                 </Form.Control.Feedback>
               </Form.Group>
-            </Form>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={handleClose}>
-              {t('chat.cancel')}
-            </Button>
-            {/* <Button type="submit" variant="primary" onClick={handleClose}> */}
-            <Button type="submit" variant="primary" onSubmit={handleSubmit}>
-              {t('chat.submit')}
-            </Button>
-          </Modal.Footer>
+            </Modal.Body>
+            <Modal.Footer>
+              <Button variant="secondary" onClick={handleClose}>
+                {t('chat.cancel')}
+              </Button>
+              {/* <Button type="submit" variant="primary" onClick={handleClose}> */}
+              <Button type="submit" variant="primary" onSubmit={handleSubmit}>
+                {t('chat.submit')}
+              </Button>
+            </Modal.Footer>
+          </Form>
         </Modal>
       )}
     </Formik>
