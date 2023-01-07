@@ -1,4 +1,3 @@
-// import axios from 'axios';
 import { Formik } from 'formik';
 import React, {
   useEffect,
@@ -23,7 +22,6 @@ const RenameChannelModal = () => {
   const channelId = useSelector((state) => state.modal.entities.channelId);
   const channels = useSelector((state) => Object.values(state.channels.entities || {}));
   const channelsName = channels.map((channel) => channel.name);
-  // const [text, setText] = useState('');
   const dispatch = useDispatch();
   const inputRef = useRef();
 
@@ -35,22 +33,6 @@ const RenameChannelModal = () => {
     channelName: Yup.string().min(3, `${t('chat.from3to20Symbols')}`).max(20, `${t('chat.from3to20Symbols')}`).notOneOf(channelsName, `${t('chat.mustBeUnicName')}`),
   });
 
-  // const handleChange = (e) => {
-  //   // this.setState({ text: e.target.value });
-  //   setText(e.target.value);
-  //   console.log(text, 'textRename');
-  // };
-
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   console.log(text, 'submitRename');
-  //   console.log(channelId, '---id: e.target.id');
-
-  //   renameChannel({ id: channelId, name: text });
-  //   setText('');
-  //   dispatch(closedModal());
-  // };
-
   const handleClose = () => dispatch(closedModal());
 
   return (
@@ -58,43 +40,18 @@ const RenameChannelModal = () => {
       initialValues={{ channelName: '' }}
       validationSchema={schema}
       onSubmit={(values) => {
-      // setAuthFailed(false);
         console.log(values, 'submit');
         renameChannel({ id: channelId, name: leoProfanity.clean(values.channelName) });
         toast.success(t('chat.channelIsRenamed'));
-        // addNewChannel(values.channelName);
-        // socket.emit('newChannel', { name: message });
-        // dispatch(fetchContent());
-        // fetchContent();
         dispatch(closedModal());
-      // try {
-      //   const response = await axios.post('/api/v1/login', values);
-      //   console.log(response, 'response Login');
-      //   localStorage.setItem('userId', JSON.stringify(response.data));
-      //   auth.logIn();
-      //   const { from } = location.state || { from: { pathname: '/' } };
-      // } catch (error) {
-      //   console.error(error);
-      //   setSubmitting(false);
-      //   // formik.setSubmitting(false);
-      //   if (error.isAxiosError && error.response.status === 401) {
-      //     setAuthFailed(true);
-      //     inputRef.current.select();
-      //     return;
-      //   }
-      //   throw error;
-      // }
       }}
     >
       {({
         values,
         errors,
-        // touched,
         handleChange,
         handleBlur,
         handleSubmit,
-        // isSubmitting,
-      /* and other goodies */
       }) => (
 
         <Modal show={show} onHide={handleClose}>
@@ -131,7 +88,6 @@ const RenameChannelModal = () => {
               <Button variant="secondary" onClick={handleClose}>
                 {t('chat.cancel')}
               </Button>
-              {/* <Button type="submit" variant="primary" onClick={handleClose}> */}
               <Button type="submit" variant="primary" onSubmit={handleSubmit}>
                 {t('chat.submit')}
               </Button>

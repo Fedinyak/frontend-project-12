@@ -1,5 +1,6 @@
 import React, {
-  useEffect, useRef,
+  useEffect,
+  useRef,
   useState,
 } from 'react';
 import { Formik } from 'formik';
@@ -9,7 +10,6 @@ import {
   Button, Card, Col, Container, Form, Row,
 } from 'react-bootstrap';
 import {
-  // Link,
   useLocation, useNavigate,
 } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -32,8 +32,6 @@ const SignUp = () => {
     username: Yup.string().min(3, `${t('chat.from3to20Symbols')}`).max(20, `${t('chat.from3to20Symbols')}`).required(`${t('chat.requiredField')}`),
     password: Yup.string().min(6, `${t('chat.min6Symbols')}`).required(`${t('chat.requiredField')}`),
     confirmPassword: Yup.string().oneOf([Yup.ref('password')], `${t('chat.passwordMustBeEqual')}`),
-    // confirmPassword: Yup.string().oneOf([Yup.ref('password')],
-    // `${t('chat.passwordMustBeEqual')}`).required(`${t('chat.requiredField')}`),
   });
 
   return (
@@ -53,25 +51,16 @@ const SignUp = () => {
                 initialValues={{ username: '', password: '', confirmPassword: '' }}
                 validationSchema={schema}
                 onSubmit={async (values, { setSubmitting }) => {
-                  // console.log({username, password}, username?)
                   setAuthFailed(false);
                   try {
-                    // const response = await axios.post('/api/v1/signup', values);
                     const response = await axios.post(routes.loginPath(), values);
-                    // console.log(response, 'response Login');
-                    // localStorage.setItem('token', response.data.token);
                     localStorage.setItem('userId', JSON.stringify(response.data));
                     auth.logIn();
                     const { from } = location.state || { from: { pathname: '/' } };
                     navigate(from);
-                    // setAuth(true);
-                    // navigate('/');
-                    // const testAuth = getAuthHeader();
-                    // console.log(testAuth, 'testAuth');
                   } catch (error) {
                     console.error(error);
                     setSubmitting(false);
-                    // formik.setSubmitting(false);
                     if (error.isAxiosError || error.response.status === 409) {
                       console.log(error.response.status, 'error.response.status');
                       setAuthFailed(true);
@@ -81,7 +70,6 @@ const SignUp = () => {
                     throw error;
                   }
                 }}
-
               >
                 {({
                   values,
@@ -91,10 +79,8 @@ const SignUp = () => {
                   handleBlur,
                   handleSubmit,
                   isSubmitting,
-                /* and other goodies */
                 }) => (
                   <Form
-                    // validated={authFailed}
                     onSubmit={handleSubmit}
                     className="col-12 col-md-6 mt-3 mt-mb-0"
                   >
@@ -109,9 +95,6 @@ const SignUp = () => {
                         value={values.username}
                         className="form-control"
                         ref={inputRef}
-                        // isValid={touched.username && errors.username}
-                        // isInvalid={touched.username && errors.username}
-                        // isInvalid={authFailed}
                         isInvalid={(touched.username && errors.username) || authFailed}
                       />
                       <Form.Label htmlFor="username">
@@ -121,7 +104,6 @@ const SignUp = () => {
                         {errors.username}
                       </Form.Control.Feedback>
                     </Form.Group>
-                    {/* {errors.username && touched.username && errors.username} */}
                     <Form.Group className="form-floating mb-4">
                       <Form.Control
                         type="password"
@@ -131,9 +113,6 @@ const SignUp = () => {
                         onBlur={handleBlur}
                         value={values.password}
                         className="form-control"
-                        // isValid={touched.password && errors.password}
-                        // isInvalid={touched.password && errors.password}
-                        // isInvalid={authFailed}
                         isInvalid={(touched.password && errors.password) || authFailed}
                       />
                       <Form.Label htmlFor="password">
@@ -152,8 +131,6 @@ const SignUp = () => {
                         onBlur={handleBlur}
                         value={values.confirmPassword}
                         className="form-control"
-                        // isValid={touched.password && errors.password}
-                        // isInvalid={touched.password && errors.password}
                         isInvalid={(touched.confirmPassword
                           && errors.confirmPassword) || authFailed}
                       />
@@ -162,13 +139,8 @@ const SignUp = () => {
                       </Form.Label>
                       <Form.Control.Feedback type="invalid" tooltip>
                         {errors.confirmPassword || (authFailed && t('chat.userAlreadyExist'))}
-                        {/* Пароли должны совпадать */}
                       </Form.Control.Feedback>
                     </Form.Group>
-                    {/* <Form.Group.Feedback type="invalid" tooltip>
-                      Такой пользователь уже существует
-                    </Form.Group.Feedback> */}
-                    {/* {errors.password && errors.password} */}
                     <Button
                       type="submit"
                       disabled={isSubmitting}
@@ -189,58 +161,3 @@ const SignUp = () => {
 };
 
 export default SignUp;
-
-//  <Formik
-//       initialValues={{ name: "", password: "" }}
-//       validate={values => {
-//         const errors = {};
-//         if (!values.name) {
-//           errors.name = "Required";
-//         } else if (
-//           console.log("error")
-//           // !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
-//         ) {
-//           errors.name = "Invalid email address";
-//         }
-//         return errors;
-//       }}
-//       onSubmit={(values, { setSubmitting }) => {
-//         setTimeout(() => {
-//           alert(JSON.stringify(values, null, 2));
-//           setSubmitting(false);
-//         }, 400);
-//       }}
-//     >
-//       {({
-//         values,
-//         errors,
-//         touched,
-//         handleChange,
-//         handleBlur,
-//         handleSubmit,
-//         isSubmitting,
-//         /* and other goodies */
-//       }) => (
-//         <form onSubmit={handleSubmit}>
-//           <input
-//             type="name"
-//             name="name"
-//             onChange={handleChange}
-//             onBlur={handleBlur}
-//             value={values.name}
-//           />
-//           {errors.name && touched.name && errors.name}
-//           <input
-//             type="password"
-//             name="password"
-//             onChange={handleChange}
-//             onBlur={handleBlur}
-//             value={values.password}
-//           />
-//           {errors.password && touched.password && errors.password}
-//           <button type="submit" disabled={isSubmitting}>
-//             Войти
-//           </button>
-//         </form>
-//       )}
-//     </Formik>

@@ -5,11 +5,6 @@ const initialState = {
     isOpened: false,
     type: null,
     channelId: null,
-    // extra: {}
-    // type(pin):"removeChannel"
-    // extra: {
-    // channelId(pin):3
-    // }
   },
 };
 
