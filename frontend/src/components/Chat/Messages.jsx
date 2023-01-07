@@ -120,12 +120,15 @@ const Messages = () => {
                   id="body"
                   aria-label={t('chat.newMessage')}
                   placeholder={t('chat.enterMessage')}
-                  className="border-0 p-0 ps-2 form-control"
+                  className="border-0 p-0 ps-2"
                   onChange={handleChange}
                   autoComplete="off"
                   ref={inputRef}
                   value={values.body}
                 />
+                <Form.Label htmlFor="body" className="visually-hidden">
+                  {t('chat.newMessage')}
+                </Form.Label>
                 <Button type="submit" variant="link" className="btn-group-vertical" disabled="">
                   {/* <Button type="submit" className="btn-group-vertical
                   outline-secondary" disabled=""> */}
