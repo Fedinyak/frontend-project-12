@@ -7,16 +7,8 @@ import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Formik } from 'formik';
 import { Element, scroller } from 'react-scroll';
-// import leoProfanity from '../leoProfanity';
 import leoProfanity from 'leo-profanity';
 import useSocket from '../../hooks/socket';
-// eslint-disable-next-line import/no-cycle
-// import { newMessage } from '../../App';
-// import { newMessage } from '../../context/ChatApi';
-// import ChatApi from '../../context/ChatApi';
-// import * as Scroll from 'react-scroll';
-// import { Link, Button, Element, Events,
-// animateScroll as scroll, scrollSpy, scroller } from 'react-scroll'
 
 const Messages = () => {
   const { t } = useTranslation();

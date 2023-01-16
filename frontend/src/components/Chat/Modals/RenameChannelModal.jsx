@@ -11,8 +11,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import leoProfanity from 'leo-profanity';
-// import { renameChannel } from '../../../context/ChatApi';
-// import ChatApi from '../../../context/ChatApi';
 import {
   closedModal,
 } from '../../../slices/modalSlice';

@@ -11,13 +11,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import * as Yup from 'yup';
 import { toast } from 'react-toastify';
 import leoProfanity from 'leo-profanity';
-// import { addNewChannel } from '../../../context/ChatApi';
-// import ChatApi from '../../../context/ChatApi';
 import { closedModal } from '../../../slices/modalSlice';
 import useSocket from '../../../hooks/socket';
-import { setNewCurrentChannelId } from '../../../slices/channelsSlice';
-// import { addNewChannel } from '../../../App';
-// import leoProfanity from '../../leoProfanity';
 
 const AddChannelModal = () => {
   const { t } = useTranslation();
@@ -48,11 +43,7 @@ const AddChannelModal = () => {
           console.log(values, 'submit');
           await ChatApi.addNewChannel(leoProfanity.clean(values.channelName));
           ChatApi.addNewChannelId();
-          // const currentChannelId = useSelector((state) => state.channels.newChannelId);
-          // addNewChannel(leoProfanity.clean(values.channelName));
-          // eslint-disable-next-line no-unused-expressions
 
-          await dispatch(setNewCurrentChannelId());
           toast.success(t('chat.channelIsCreated'));
           dispatch(closedModal());
         } catch (e) {

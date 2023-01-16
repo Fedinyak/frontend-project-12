@@ -8,7 +8,6 @@ import 'react-toastify/dist/ReactToastify.css';
 import leoProfanity from 'leo-profanity';
 import { io } from 'socket.io-client';
 import AuthProvider from './context/AuthProvider';
-// import SocketContext from './context/SocketContext';
 import SocketProvider from './context/SocketProvider';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import store from './slices/index.js';
@@ -25,7 +24,6 @@ const rollbarConfig = {
 
 const socketInit = io();
 const init = () => {
-  // const socket = io();
   const socket = ChatApi(socketInit);
   console.log(socket, 'socketttt');
   leoProfanity.clearList();
@@ -35,9 +33,7 @@ const init = () => {
   return (
     <ProviderRollbar config={rollbarConfig}>
       <ErrorBoundary>
-        {/* <SocketContext.Provider value={socket}> */}
         <SocketProvider socket={socket}>
-          {/* <SocketContext.Provider> */}
           <I18nextProvider i18n={i18n}>
             <ToastContainer />
             <Provider store={store}>
@@ -46,7 +42,6 @@ const init = () => {
               </AuthProvider>
             </Provider>
           </I18nextProvider>
-          {/* </SocketContext.Provider> */}
         </SocketProvider>
       </ErrorBoundary>
     </ProviderRollbar>

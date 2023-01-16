@@ -4,9 +4,7 @@ import Modal from 'react-bootstrap/Modal';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
-// import { removeChannel } from '../../../context/ChatApi';
 import useSocket from '../../../hooks/socket';
-// import ChatApi from '../../../context/ChatApi';
 import { closedModal } from '../../../slices/modalSlice';
 
 const RemoveChannelModal = () => {

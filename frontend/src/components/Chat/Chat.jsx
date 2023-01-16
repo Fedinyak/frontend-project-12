@@ -9,14 +9,11 @@ import Channels from './Channels';
 import Messages from './Messages';
 import routes from '../../routes';
 import {
-  // addChannel,
   addChannels, setCurrentChannelId,
 } from '../../slices/channelsSlice';
 import {
-  // addMessage,
   addMessages,
 } from '../../slices/messagesSlice';
-// import { fetchContent } from '../../slices/channelsSlice';
 
 const Chat = () => {
   const dispatch = useDispatch();
