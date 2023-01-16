@@ -12,6 +12,7 @@ const Channels = () => {
   const { t } = useTranslation();
   const channels = useSelector((state) => Object.values(state.channels.entities || {}));
   const currentChannelId = useSelector((state) => state.channels.currentChannelId);
+
   const dispatch = useDispatch();
   const addChannel = () => {
     dispatch(openedModal({ isOpened: true, type: 'addChannel' }));

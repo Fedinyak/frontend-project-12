@@ -216,7 +216,8 @@ import {
   addChannel,
   // setCurrentChannelId,
   deleteChannel,
-  getNewChannelId,
+  // getNewChannelId,
+  setCurrentChannelId,
   updateChannel,
 } from '../slices/channelsSlice';
 import {
@@ -249,10 +250,16 @@ const ChatApi = (socket) => {
     console.log(payload, '1 neeeeeew');
 
     // store.dispatch(setCurrentChannelId(payload.id));
-    store.dispatch(getNewChannelId(payload.id));
+    // store.dispatch(getNewChannelId(payload.id));
     store.dispatch(addChannel(payload));
     console.log(payload, '4 newChannel'); // { id: 6, name: "new channel", removable: true }
   });
+
+  const addNewChannelId = () => {
+    socket.on('newChannel', (payload) => {
+      store.dispatch(setCurrentChannelId(payload.id));
+    });
+  };
 
   const removeChannel = (id) => {
     console.log(id, 'rem');
@@ -274,7 +281,7 @@ const ChatApi = (socket) => {
     store.dispatch(updateChannel({ id: payload.id, changes: payload }));
   });
   return {
-    newMessage, addNewChannel, removeChannel, renameChannel,
+    newMessage, addNewChannel, removeChannel, renameChannel, addNewChannelId,
   };
   // return (
   //   <SocketContext.Provider value={{
