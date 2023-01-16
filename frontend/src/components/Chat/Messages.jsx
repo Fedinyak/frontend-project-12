@@ -6,8 +6,17 @@ import { Form, Button, InputGroup } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Formik } from 'formik';
-import leoProfanity from '../leoProfanity';
-import { newMessage } from '../../context/ChatApi';
+import { Element, scroller } from 'react-scroll';
+// import leoProfanity from '../leoProfanity';
+import leoProfanity from 'leo-profanity';
+import useSocket from '../../hooks/socket';
+// eslint-disable-next-line import/no-cycle
+// import { newMessage } from '../../App';
+// import { newMessage } from '../../context/ChatApi';
+// import ChatApi from '../../context/ChatApi';
+// import * as Scroll from 'react-scroll';
+// import { Link, Button, Element, Events,
+// animateScroll as scroll, scrollSpy, scroller } from 'react-scroll'
 
 const Messages = () => {
   const { t } = useTranslation();
@@ -19,6 +28,7 @@ const Messages = () => {
   const localStorateItem = JSON.parse(localStorage.getItem('userId'));
   const { username } = localStorateItem;
   const inputRef = useRef();
+  const ChatApi = useSocket();
 
   const messagesCount = (messagesInChannel) => {
     if (messagesInChannel.length - 1 === -1) {
@@ -30,6 +40,16 @@ const Messages = () => {
   useEffect(() => {
     inputRef.current.focus();
   }, [currentChannelId]);
+
+  useEffect(() => {
+    scroller.scrollTo('messageScrollElement', {
+      // duration: 100,
+      // delay: 100,
+      // smooth: true,
+      containerId: 'messages-box',
+      // offset: 50, // Scrolls to element + 50 pixels down the page
+    });
+  });
 
   return (
     <div className="d-flex flex-column h-100">
@@ -50,7 +70,7 @@ const Messages = () => {
             {`: ${item.body}`}
           </div>
         ))}
-
+        <Element name="messageScrollElement" />
       </div>
       <div className="mt-auto px-5 py-3">
         <Formik
@@ -60,7 +80,8 @@ const Messages = () => {
 
             const filterMessage = leoProfanity.clean(values.body);
 
-            newMessage(
+            ChatApi.newMessage(
+            // newMessage(
               {
                 body: filterMessage,
                 channelId: currentChannelId,

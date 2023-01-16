@@ -10,10 +10,15 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import * as Yup from 'yup';
 import { toast } from 'react-toastify';
-import { addNewChannel } from '../../../context/ChatApi';
-
+import leoProfanity from 'leo-profanity';
+import store from '../../../slices/index';
+// import { addNewChannel } from '../../../context/ChatApi';
+// import ChatApi from '../../../context/ChatApi';
 import { closedModal } from '../../../slices/modalSlice';
-import leoProfanity from '../../leoProfanity';
+import useSocket from '../../../hooks/socket';
+import { setNewCurrentChannelId } from '../../../slices/channelsSlice';
+// import { addNewChannel } from '../../../App';
+// import leoProfanity from '../../leoProfanity';
 
 const AddChannelModal = () => {
   const { t } = useTranslation();
@@ -23,6 +28,8 @@ const AddChannelModal = () => {
   console.log(channelsName, 'addChannelModal Channels');
   const dispatch = useDispatch();
   const inputRef = useRef();
+  const ChatApi = useSocket();
+  const currentChannelId = useSelector((state) => state.channels.newChannelId);
 
   useEffect(() => {
     inputRef.current.focus();
@@ -38,11 +45,22 @@ const AddChannelModal = () => {
     <Formik
       initialValues={{ channelName: '' }}
       validationSchema={schema}
-      onSubmit={(values) => {
-        console.log(values, 'submit');
-        addNewChannel(leoProfanity.clean(values.channelName));
-        toast.success(t('chat.channelIsCreated'));
-        dispatch(closedModal());
+      onSubmit={async (values) => {
+        try {
+          console.log(values, 'submit');
+          await ChatApi.addNewChannel(leoProfanity.clean(values.channelName));
+          // const currentChannelId = useSelector((state) => state.channels.newChannelId);
+          // addNewChannel(leoProfanity.clean(values.channelName));
+          // eslint-disable-next-line no-unused-expressions
+          console.log(currentChannelId, 'idddddddddddd');
+          console.log(store.getState(), 'idddddddddddd getState');
+
+          await dispatch(setNewCurrentChannelId());
+          toast.success(t('chat.channelIsCreated'));
+          dispatch(closedModal());
+        } catch (e) {
+          console.log(e);
+        }
       }}
     >
       {({

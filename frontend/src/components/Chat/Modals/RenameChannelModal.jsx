@@ -10,11 +10,13 @@ import * as Yup from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
-import { renameChannel } from '../../../context/ChatApi';
+import leoProfanity from 'leo-profanity';
+// import { renameChannel } from '../../../context/ChatApi';
+// import ChatApi from '../../../context/ChatApi';
 import {
   closedModal,
 } from '../../../slices/modalSlice';
-import leoProfanity from '../../leoProfanity';
+import useSocket from '../../../hooks/socket';
 
 const RenameChannelModal = () => {
   const { t } = useTranslation();
@@ -24,6 +26,7 @@ const RenameChannelModal = () => {
   const channelsName = channels.map((channel) => channel.name);
   const dispatch = useDispatch();
   const inputRef = useRef();
+  const ChatApi = useSocket();
 
   useEffect(() => {
     inputRef.current.focus();
@@ -41,7 +44,8 @@ const RenameChannelModal = () => {
       validationSchema={schema}
       onSubmit={(values) => {
         console.log(values, 'submit');
-        renameChannel({ id: channelId, name: leoProfanity.clean(values.channelName) });
+        ChatApi.renameChannel({ id: channelId, name: leoProfanity.clean(values.channelName) });
+        // renameChannel({ id: channelId, name: leoProfanity.clean(values.channelName) });
         toast.success(t('chat.channelIsRenamed'));
         dispatch(closedModal());
       }}

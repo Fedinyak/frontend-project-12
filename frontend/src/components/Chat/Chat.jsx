@@ -3,16 +3,43 @@ import {
 } from 'react-bootstrap';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
+import { toast } from 'react-toastify';
+import axios from 'axios';
 import Channels from './Channels';
 import Messages from './Messages';
-import { fetchContent } from '../../slices/channelsSlice';
+import routes from '../../routes';
+import {
+  // addChannel,
+  addChannels, setCurrentChannelId,
+} from '../../slices/channelsSlice';
+import {
+  // addMessage,
+  addMessages,
+} from '../../slices/messagesSlice';
+// import { fetchContent } from '../../slices/channelsSlice';
 
 const Chat = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchContent());
-  }, [dispatch]);
+    // dispatch(fetchContent());
+    // eslint-disable-next-line consistent-return
+    const fetchContent = async () => {
+      try {
+        const userId = JSON.parse(localStorage.getItem('userId'));
+        const headers = { Authorization: `Bearer ${userId.token}` };
+        const response = await axios.get(routes.dataPath(), { headers });
+        console.log(response.data, 'response.data');
+        dispatch(addChannels(response.data.channels));
+        dispatch(addMessages(response.data.messages));
+        dispatch(setCurrentChannelId(response.data.currentChannelId));
+        return response.data;
+      } catch (error) {
+        toast.success(error.response.status);
+      }
+    };
+    fetchContent();
+  });
 
   return (
 

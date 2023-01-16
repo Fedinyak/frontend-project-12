@@ -53,7 +53,7 @@ const SignUp = () => {
                 onSubmit={async (values, { setSubmitting }) => {
                   setAuthFailed(false);
                   try {
-                    const response = await axios.post(routes.loginPath(), values);
+                    const response = await axios.post(routes.signupPath(), values);
                     localStorage.setItem('userId', JSON.stringify(response.data));
                     auth.logIn();
                     const { from } = location.state || { from: { pathname: '/' } };

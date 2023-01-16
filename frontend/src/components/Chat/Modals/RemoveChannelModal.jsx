@@ -4,7 +4,9 @@ import Modal from 'react-bootstrap/Modal';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
-import { removeChannel } from '../../../context/ChatApi';
+// import { removeChannel } from '../../../context/ChatApi';
+import useSocket from '../../../hooks/socket';
+// import ChatApi from '../../../context/ChatApi';
 import { closedModal } from '../../../slices/modalSlice';
 
 const RemoveChannelModal = () => {
@@ -12,11 +14,13 @@ const RemoveChannelModal = () => {
   const show = useSelector((state) => state.modal.entities.isOpened);
   const channelId = useSelector((state) => state.modal.entities.channelId);
   const dispatch = useDispatch();
+  const ChatApi = useSocket();
 
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(channelId, 'channelId rem');
-    removeChannel(channelId);
+    ChatApi.removeChannel(channelId);
+    // removeChannel(channelId);
     toast.success(t('chat.channelIsDeleted'));
     dispatch(closedModal());
   };
