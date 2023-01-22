@@ -14,6 +14,7 @@ import {
 import {
   addMessages,
 } from '../../slices/messagesSlice';
+import SwitchIdProvider from '../../context/SwitchIdProvider';
 
 const Chat = () => {
   const dispatch = useDispatch();
@@ -43,7 +44,9 @@ const Chat = () => {
     <Container className="h-100 my-4 overflow-hidden rounded shadow">
       <Row className="h-100 bg-white flex-md-row">
         <Col xs={4} md={2} className="border-end pt-5 px-0 bg-light">
-          <Channels />
+          <SwitchIdProvider>
+            <Channels />
+          </SwitchIdProvider>
         </Col>
         <Col className="p-0 h-100">
           <Messages />

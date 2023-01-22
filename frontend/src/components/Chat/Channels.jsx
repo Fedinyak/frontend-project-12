@@ -1,4 +1,7 @@
-import React from 'react';
+import React, {
+  useContext,
+  useEffect,
+} from 'react';
 import {
   useSelector,
   useDispatch,
@@ -7,13 +10,26 @@ import { useTranslation } from 'react-i18next';
 import Channel from './Channel';
 import Modal from './Modals/Modal';
 import { openedModal } from '../../slices/modalSlice';
+import SwitchIdContext from '../../context/SwitchIdContext';
+import { setNewChannelId } from '../../slices/channelsSlice';
 
 const Channels = () => {
   const { t } = useTranslation();
   const channels = useSelector((state) => Object.values(state.channels.entities || {}));
   const currentChannelId = useSelector((state) => state.channels.currentChannelId);
-
+  const newChannelId = useSelector((state) => state.channels.newChannelId);
   const dispatch = useDispatch();
+  const switchNewChannelIdState = useContext(SwitchIdContext);
+  console.log(switchNewChannelIdState.channelNewId, 'switchNewChannelIdState.switchChannelId');
+
+  useEffect(() => {
+    if (switchNewChannelIdState.channelNewId) {
+      console.log(newChannelId, 'newChannelId');
+      dispatch(setNewChannelId());
+      switchNewChannelIdState.dontSwitchChannelNewId();
+    }
+  }, [newChannelId]);
+
   const addChannel = () => {
     dispatch(openedModal({ isOpened: true, type: 'addChannel' }));
   };

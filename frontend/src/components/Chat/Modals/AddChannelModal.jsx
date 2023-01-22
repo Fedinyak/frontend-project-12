@@ -1,5 +1,6 @@
 import { Formik } from 'formik';
 import React, {
+  useContext,
   useEffect,
   useRef,
 } from 'react';
@@ -11,8 +12,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import * as Yup from 'yup';
 import { toast } from 'react-toastify';
 import leoProfanity from 'leo-profanity';
+import store from '../../../slices/index';
 import { closedModal } from '../../../slices/modalSlice';
 import useSocket from '../../../hooks/socket';
+import SwitchIdContext from '../../../context/SwitchIdContext';
 
 const AddChannelModal = () => {
   const { t } = useTranslation();
@@ -23,6 +26,8 @@ const AddChannelModal = () => {
   const dispatch = useDispatch();
   const inputRef = useRef();
   const ChatApi = useSocket();
+  const newChannelId = useSelector((state) => state.channels.newChannelId);
+  const switchNewChannelIdState = useContext(SwitchIdContext);
 
   useEffect(() => {
     inputRef.current.focus();
@@ -33,22 +38,20 @@ const AddChannelModal = () => {
   });
 
   const handleClose = () => dispatch(closedModal());
-
   return (
     <Formik
       initialValues={{ channelName: '' }}
       validationSchema={schema}
-      onSubmit={async (values) => {
-        try {
-          console.log(values, 'submit');
-          await ChatApi.addNewChannel(leoProfanity.clean(values.channelName));
-          ChatApi.addNewChannelId();
-
-          toast.success(t('chat.channelIsCreated'));
-          dispatch(closedModal());
-        } catch (e) {
-          console.log(e);
-        }
+      onSubmit={(values) => {
+        console.log(values, 'submit');
+        ChatApi.addNewChannel(leoProfanity.clean(values.channelName));
+        toast.success(t('chat.channelIsCreated'));
+        console.log(store.getState(), 'store.getState');
+        // dispatch(setNewChannelId());
+        console.log(newChannelId, 'newChannelId');
+        switchNewChannelIdState.doSwitchChannelNewId();
+        dispatch(closedModal());
+        // addNewChannelIdText();
       }}
     >
       {({
