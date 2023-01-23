@@ -28,6 +28,7 @@ const Channels = () => {
       dispatch(setNewChannelId());
       switchNewChannelIdState.dontSwitchChannelNewId();
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [newChannelId]);
 
   const addChannel = () => {
